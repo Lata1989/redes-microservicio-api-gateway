@@ -5,7 +5,7 @@ import { AUTH_SERVICE_URL } from '../config/envConfig.js';
 const router = express.Router();
 
 // Proxy para registrar un nuevo usuario
-router.post('/register', createProxyMiddleware({
+router.use('/register', createProxyMiddleware({
   target: AUTH_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
@@ -17,7 +17,7 @@ router.post('/register', createProxyMiddleware({
 }));
 
 // Proxy para autenticar un usuario
-router.post('/login', createProxyMiddleware({
+router.use('/login', createProxyMiddleware({
   target: AUTH_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
