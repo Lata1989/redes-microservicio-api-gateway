@@ -5,27 +5,23 @@ import { AUTH_SERVICE_URL } from '../config/envConfig.js';
 const router = express.Router();
 
 // Proxy para registrar un nuevo usuario
-router.use('/register', createProxyMiddleware({
+router.post('/register', createProxyMiddleware({
   target: AUTH_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
-    '^/auth/register': '/auth/register'  // Reescribe la ruta a la del microservicio
+    '^/auth/register': '/register'  // Reescribe la ruta para coincidir con la ruta del microservicio
   },
-  onProxyReq: (proxyReq, req, res) => {
-    console.log(`Proxying request to: ${AUTH_SERVICE_URL}/auth/register`);
-  },
+  logLevel: 'debug'  // Ayuda a depurar el proxy
 }));
 
 // Proxy para autenticar un usuario
-router.use('/login', createProxyMiddleware({
+router.post('/login', createProxyMiddleware({
   target: AUTH_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
-    '^/auth/login': '/auth/login'  // Reescribe la ruta a la del microservicio
+    '^/auth/login': '/login'  // Reescribe la ruta para coincidir con la ruta del microservicio
   },
-  onProxyReq: (proxyReq, req, res) => {
-    console.log(`Proxying request to: ${AUTH_SERVICE_URL}/auth/login`);
-  },
+  logLevel: 'debug'  // Ayuda a depurar el proxy
 }));
 
 export default router;
